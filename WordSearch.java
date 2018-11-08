@@ -9,6 +9,7 @@ public class WordSearch{
      */
     public WordSearch(int rows,int cols){
       data = new char[rows][cols];
+      clear();
     }
 
     /**Set all values in the WordSearch to underscores'_'*/
@@ -57,6 +58,8 @@ public class WordSearch{
           data[row][i + col] == word.charAt(i)))
           {return false;}
       }
+      for (int i = 0; i < word.length(); i += 1) {
+        data[row][i + col] = word.charAt(i);}
       return true;
     }
 
@@ -77,10 +80,12 @@ public class WordSearch{
       if (data[col].length - row - word.length() < 0 ||
           data.length - col < 0) {return false;}
       for (int i = 0; i < word.length(); i += 1) {
-        if (!(data[col][i + row] == '_' ||
-          data[col][i + row] == word.charAt(i)))
+        if (!(data[row + i][col] == '_' ||
+          data[row + i][col] == word.charAt(i)))
           {return false;}
       }
+      for (int i = 0; i < word.length(); i += 1) {
+          data[row + i][col] = word.charAt(i);}
       return true;
     }
 
