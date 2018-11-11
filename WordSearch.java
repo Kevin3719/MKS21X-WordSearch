@@ -27,7 +27,7 @@ public class WordSearch{
      *@return a String with each character separated by spaces, and rows
      *separated by newlines.
      */
-    public String toString(){
+    /**public String toString(){
       String output = "";
       for (int rownum = 0; rownum < data.length; rownum += 1) {
         if (rownum > 0) {output += "\n";}
@@ -37,7 +37,7 @@ public class WordSearch{
       }
       return output;
     }
-
+    */
 
     /**Attempts to add a given word to the specified position of the WordGrid.
      *The word is added from left to right, must fit on the WordGrid, and must
@@ -129,23 +129,45 @@ public class WordSearch{
 
     //all words that were successfully added get moved into wordsAdded.
     private ArrayList<String>wordsAdded;
+
+
+
+  // Part 1 - Two Constructors
   public WordSearch( int rows, int cols, String fileName) {
     //  Choose a randSeed using the clock random
     new WordSearch(rows, cols, fileName);
     randgen = new Random();
     //addAllWords();
   }
+
+
   public WordSearch( int rows, int cols, String fileName, int randSeed) {
     //Use the random seed specified.
     new WordSearch(rows,cols,fileName);
     randgen = new Random(randSeed);
+    seed = randSeed;
   }
 
 
 
+  // Part 2 - Better to String;
 
-
-
+  public String toString() {
+    String output = "";
+    for ( int x = 0; x < data.length; x += 1) {
+      output += "|";
+      for (int y = 0; y < data[x].length; y += 1) {
+        output += data[x][y];
+        if (y < data[x].length - 1) {
+          output += " ";
+        }
+      }
+      output += "|";
+    }
+    output += wordsAdded;
+    output += "(" + seed + ")";
+    return output;
+  }
 
 
 
