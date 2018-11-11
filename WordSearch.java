@@ -138,6 +138,7 @@ public class WordSearch{
     new WordSearch(rows, cols, fileName);
     randgen = new Random();
     //addAllWords();
+
   }
 
 
@@ -218,7 +219,22 @@ public class WordSearch{
 
   */
 
-
+  private void addAllWords() {
+    for (int i = 0; wordsToAdd.size() > 0 || i < 1000; i += 1) {
+      int index = randgen.nextInt() % wordsToAdd.size();
+      int rowIncrement = randgen.nextInt() % 3 - 1;
+      int colIncrement = randgen.nextInt() % 3 - 1;
+      int row = randgen.nextInt() % data.length;
+      int col = randgen.nextInt() % data[0].length;
+      String word = wordsToAdd.get(index);
+      for (int j = 0; j < 200; j += 1)
+      if (addWord(word, row, col,rowIncrement,colIncrement)) {
+        j = 200;
+        wordsToAdd.remove(word);
+        wordsAdded.add(word);
+      }
+    }
+  }
 
 
 
