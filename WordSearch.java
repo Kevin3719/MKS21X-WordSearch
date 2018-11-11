@@ -130,11 +130,16 @@ public class WordSearch{
     //all words that were successfully added get moved into wordsAdded.
     private ArrayList<String>wordsAdded;
   public WordSearch( int rows, int cols, String fileName) {
-  //  Choose a randSeed using the clock random
-  data = new char[rows][cols];
-  clear();
-  randgen = new Random();
-}
+    //  Choose a randSeed using the clock random
+    new WordSearch(rows, cols, fileName);
+    randgen = new Random();
+    //addAllWords();
+  }
+  public WordSearch( int rows, int cols, String fileName, int randSeed) {
+    //Use the random seed specified.
+    new WordSearch(rows,cols,fileName);
+    randgen = new Random(randSeed);
+  }
 
 
 
