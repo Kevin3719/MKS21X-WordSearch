@@ -130,13 +130,31 @@ public class WordSearch{
     //all words that were successfully added get moved into wordsAdded.
     private ArrayList<String>wordsAdded;
 
-
+  public void readfile(String fileName) {
+    try {
+    File f = new File(fileName);
+    Scanner in = new Scanner(f);
+    while (in.hasNext()) {
+    try {
+    String line = in.next();
+    wordsToAdd.add(line);}
+    catch (NullPointerException n) {}
+  }
+}
+    catch (FileNotFoundException e) {}
+  }
 
   // Part 1 - Two Constructors
   public WordSearch( int rows, int cols, String fileName) {
     //  Choose a randSeed using the clock random
-    new WordSearch(rows, cols, fileName);
-    randgen = new Random();
+    data = new char[rows][cols];
+    clear();
+    wordsToAdd = new ArrayList();
+    wordsAdded = new ArrayList();
+    seed = (int) System.currentTimeMillis();
+    Random randgen = new Random();
+    randgen.setSeed(seed);
+    readfile(fileName);
     //addAllWords();
 
   }
@@ -163,7 +181,7 @@ public class WordSearch{
           output += " ";
         }
       }
-      output += "|";
+      output += "|\n";
     }
     output += wordsAdded;
     output += "(" + seed + ")";
@@ -187,27 +205,32 @@ public class WordSearch{
   *        false when: the word doesn't fit, OR  rowchange and colchange are both 0,
   *        OR there are overlapping letters that do not match
   */
- private boolean addWord(String word,int row, int col, int rowIncrement, int colIncrement){
-   if (word.length()*rowIncrement + col > data.length - 1 ||
-       word.length()*rowIncrement + col < 0 ||
-       word.length()*colIncrement + row > data[row].length ||
-       word.length()*colIncrement + row < 0
+  public boolean addWord(String word,int row, int col, int rowIncrement, int colIncrement){
+   if (word.length()*rowIncrement + row > data.length ||
+       word.length()*rowIncrement + row < -1 ||
+       word.length()*colIncrement + col > data[row].length ||
+       word.length()*colIncrement + col < -1 ||
+       (rowIncrement == 0 &&
+       colIncrement == 0)
        )
        {return false;}
   for (int i = 0; i < word.length(); i += 1) {
     int j = row + rowIncrement * i;
     int k = col + colIncrement * i;
-    if (data[j][k] != word.charAt(i) ||
-        data[j][k] == '_') {
+    if (data[j][k] != word.charAt(i) &&
+        data[j][k] != '_') {
           return false;
         }
   }
-  for (int i = 0; i < word.length(); i += 1) {
-    int j = row + rowIncrement * i;
-    int k = col + colIncrement * i;
-    data[j][k] = word.charAt(i);}
+  for (int b = 0; b < word.length(); b += 1) {
+    int j = row + rowIncrement * b;
+    int k = col + colIncrement * b;
+    data[j][k] = word.charAt(b);
+  }
+  wordsToAdd.remove(word);
+  wordsAdded.add(word);
   return true;
- }
+}
 
  /*[rowIncrement,colIncrement] examples:
 
@@ -219,8 +242,9 @@ public class WordSearch{
 
   */
 
-  private void addAllWords() {
-    for (int i = 0; wordsToAdd.size() > 0 || i < 1000; i += 1) {
+  public void addAllWords() {
+     if (data.length > 0) {
+    for (int i = 0; wordsToAdd.size() > 0 && i < 1000; i += 1) {
       int index = randgen.nextInt() % wordsToAdd.size();
       int rowIncrement = randgen.nextInt() % 3 - 1;
       int colIncrement = randgen.nextInt() % 3 - 1;
@@ -230,11 +254,11 @@ public class WordSearch{
       for (int j = 0; j < 200; j += 1)
       if (addWord(word, row, col,rowIncrement,colIncrement)) {
         j = 200;
-        wordsToAdd.remove(word);
-        wordsAdded.add(word);
       }
     }
   }
+}
+
 
 
 
