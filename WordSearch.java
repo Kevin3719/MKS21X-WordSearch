@@ -111,6 +111,9 @@ public class WordSearch{
         return true;
 
   }
+  /**Attempts to add a given word to the specified position of the WordGrid.
+  *The word is added in the direction rowIncrement,colIncrement
+
 
   // Assignment Part 2;
   /** Attempts to constuct a word search using
@@ -196,6 +199,7 @@ public class WordSearch{
   /**Attempts to add a given word to the specified position of the WordGrid.
   *The word is added in the direction rowIncrement,colIncrement
 
+
   *Words must have a corresponding letter to match any letters that it overlaps.
 
   *
@@ -236,7 +240,6 @@ public class WordSearch{
   wordsAdded.add(word);
   return true;
 }
-
  /*[rowIncrement,colIncrement] examples:
 
   *[-1,1] would add up and the right because (row -1 each time, col + 1 each time)
@@ -246,6 +249,7 @@ public class WordSearch{
   *[ 0,-1] would add towards the left because (col - 1), with no row change
 
   */
+
 
   public void addAllWords() {
      if (data.length > 0) {
@@ -263,13 +267,6 @@ public class WordSearch{
     }
   }
 }
-
-
-
-
-
-
-
 
 
 
