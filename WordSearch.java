@@ -162,9 +162,14 @@ public class WordSearch{
 
   public WordSearch( int rows, int cols, String fileName, int randSeed) {
     //Use the random seed specified.
-    new WordSearch(rows,cols,fileName);
-    randgen = new Random(randSeed);
+    data = new char[rows][cols];
+    clear();
+    wordsToAdd = new ArrayList();
+    wordsAdded = new ArrayList();
     seed = randSeed;
+    Random randgen = new Random();
+    randgen.setSeed(seed);
+    readfile(fileName);
   }
 
 
