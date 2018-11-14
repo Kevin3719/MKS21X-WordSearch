@@ -174,7 +174,18 @@ public class WordSearch{
     randgen.setSeed(seed);
     readfile(fileName);
   }
-
+  public WordSearch( int rows, int cols, String fileName, int randSeed, boolean ans) {
+    //Use the random seed specified.
+    data = new char[rows][cols];
+    clear();
+    wordsToAdd = new ArrayList();
+    wordsAdded = new ArrayList();
+    seed = randSeed;
+    Random randgen = new Random();
+    randgen.setSeed(seed);
+    readfile(fileName);
+    if (!ans) {fillItIn();}
+  }
 
 
   // Part 2 - Better to String;
@@ -184,7 +195,8 @@ public class WordSearch{
     for ( int x = 0; x < data.length; x += 1) {
       output += "|";
       for (int y = 0; y < data[x].length; y += 1) {
-        output += data[x][y];
+        if (data[x][y] == '_') {output += ' ';} else {
+        output += data[x][y];}
         if (y < data[x].length - 1) {
           output += " ";
         }
@@ -255,8 +267,8 @@ public class WordSearch{
      if (data.length > 0) {
     for (int i = 0; wordsToAdd.size() > 0 && i < 1000; i += 1) {
       int index = randgen.nextInt() % wordsToAdd.size();
-      int rowIncrement = randgen.nextInt() % 3 - 1;
-      int colIncrement = randgen.nextInt() % 3 - 1;
+      int rowIncrement = randgen.nextInt(3) - 1;
+      int colIncrement = randgen.nextInt(3) - 1;
       int row = randgen.nextInt() % data.length;
       int col = randgen.nextInt() % data[0].length;
       String word = wordsToAdd.get(index);
@@ -268,10 +280,29 @@ public class WordSearch{
   }
 }
 
+  public void fillItIn() {
+    for (int i = 0; i < data.length; i += 1) {
+      for (int j = 0; j < data[i].length; j += 1) {
+        if (data[i][j] == '_') {
+          data[i][j] = (char) (randgen.nextInt(26) + 'a');
+        }
+      }
+    }
+  }
 
 
+  public static void main(String[] args) {
+    if (args.length < 5) {
+       key = false;}
+       else {
+       key = args[4];
+       }
+    if (arg.length < 4) {
+        randSeed = 
+    try { public WordSearch( int rows, int cols, String fileName, int randSeed, boolean ans)
 
-
+    }
+  }
 
 
 
