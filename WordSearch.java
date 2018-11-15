@@ -1,4 +1,4 @@
-import java.util.*; //random, scanner, arraylist
+ import java.util.*; //random, scanner, arraylist
 import java.io.*; //file, filenotfoundexception
 public class WordSearch{
     private char[][]data;
@@ -184,7 +184,8 @@ public class WordSearch{
     Random randgen = new Random();
     randgen.setSeed(seed);
     readfile(fileName);
-    if (!ans) {fillItIn();}
+    //addAllWords();
+    //if (!ans) {fillItIn();}
   }
 
 
@@ -264,11 +265,11 @@ public class WordSearch{
 
 
   public void addAllWords() {
-     if (data.length > 0) {
+     if (data.length > 0 ) {
     for (int i = 0; wordsToAdd.size() > 0 && i < 1000; i += 1) {
       int index = randgen.nextInt() % wordsToAdd.size();
-      int rowIncrement = randgen.nextInt(3) - 1;
-      int colIncrement = randgen.nextInt(3) - 1;
+      int rowIncrement = randgen.nextInt() % 3 - 1;
+      int colIncrement = randgen.nextInt() % 3 - 1;
       int row = randgen.nextInt() % data.length;
       int col = randgen.nextInt() % data[0].length;
       String word = wordsToAdd.get(index);
@@ -292,19 +293,30 @@ public class WordSearch{
 
 
   public static void main(String[] args) {
+    boolean key;
+    int theseed;
     if (args.length < 5) {
        key = false;}
        else {
-       key = args[4];
+       key = Boolean.valueOf(args[4]);
        }
-    if (arg.length < 4) {
-        randSeed = 
-    try { public WordSearch( int rows, int cols, String fileName, int randSeed, boolean ans)
-
+    if (args.length < 4) {
+        theseed = 24601;}
+        else {
+        theseed = Integer.parseInt(args[3]);
+        }
+    if (args.length < 3 || Integer.parseInt(args[0]) < 1 || Integer.parseInt(args[1]) < 1) {
+      System.out.println("Directions: Put in a positive rows and cols value, then put in a file name. A seed interger and an answer boolean is optional");
+    }
+    else {
+    try {
+      String fileName = args[2];
+      int cols = Integer.parseInt(args[1]);
+      int rows = Integer.parseInt(args[0]);
+      WordSearch output = new WordSearch(rows,cols,fileName,theseed,key);
+      System.out.println(output);
+    }
+    catch (IllegalArgumentException b) {System.out.println("Directions: Put in a positive rows and cols value, then put in a file name. A seed interger and an answer boolean is optional");}
     }
   }
-
-
-
-
 }
