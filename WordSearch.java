@@ -170,9 +170,10 @@ public class WordSearch{
     wordsToAdd = new ArrayList();
     wordsAdded = new ArrayList();
     seed = randSeed;
-    Random randgen = new Random();
+    randgen = new Random();
     randgen.setSeed(seed);
     readfile(fileName);
+    addAllWords();
   }
   public WordSearch( int rows, int cols, String fileName, int randSeed, boolean ans) {
     //Use the random seed specified.
@@ -181,10 +182,10 @@ public class WordSearch{
     wordsToAdd = new ArrayList();
     wordsAdded = new ArrayList();
     seed = randSeed;
-    Random randgen = new Random();
+    randgen = new Random();
     randgen.setSeed(seed);
     readfile(fileName);
-    //addAllWords();
+    addAllWords();
     //if (!ans) {fillItIn();}
   }
 
@@ -318,5 +319,5 @@ public class WordSearch{
     }
     catch (IllegalArgumentException b) {System.out.println("Directions: Put in a positive rows and cols value, then put in a file name. A seed interger and an answer boolean is optional");}
     }
-  }
+  } 
 }
