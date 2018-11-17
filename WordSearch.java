@@ -1,4 +1,4 @@
-import java.util.*; //random, scanner, arraylist
+ import java.util.*; //random, scanner, arraylist
 import java.io.*; //file, filenotfoundexception
 public class WordSearch{
     private char[][]data;
@@ -170,11 +170,24 @@ public class WordSearch{
     wordsToAdd = new ArrayList();
     wordsAdded = new ArrayList();
     seed = randSeed;
-    randgen = new Random(seed);
+    randgen = new Random();
+    randgen.setSeed(seed);
     readfile(fileName);
     addAllWords();
   }
-
+  public WordSearch( int rows, int cols, String fileName, int randSeed, boolean ans) {
+    //Use the random seed specified.
+    data = new char[rows][cols];
+    clear();
+    wordsToAdd = new ArrayList();
+    wordsAdded = new ArrayList();
+    seed = randSeed;
+    randgen = new Random();
+    randgen.setSeed(seed);
+    readfile(fileName);
+    addAllWords();
+    //if (!ans) {fillItIn();}
+  }
 
 
   // Part 2 - Better to String;
@@ -184,7 +197,8 @@ public class WordSearch{
     for ( int x = 0; x < data.length; x += 1) {
       output += "|";
       for (int y = 0; y < data[x].length; y += 1) {
-        output += data[x][y];
+        if (data[x][y] == '_') {output += ' ';} else {
+        output += data[x][y];}
         if (y < data[x].length - 1) {
           output += " ";
         }
@@ -269,12 +283,42 @@ public class WordSearch{
   }
 }
 
+  public void fillItIn() {
+    for (int i = 0; i < data.length; i += 1) {
+      for (int j = 0; j < data[i].length; j += 1) {
+        if (data[i][j] == '_') {
+          data[i][j] = (char) (randgen.nextInt(26) + 'a');
+        }
+      }
+    }
+  }
 
 
-
-
-
-
-
-
+  public static void main(String[] args) {
+    boolean key;
+    int theseed;
+    if (args.length < 5) {
+       key = false;}
+       else {
+       key = Boolean.valueOf(args[4]);
+       }
+    if (args.length < 4) {
+        theseed = 24601;}
+        else {
+        theseed = Integer.parseInt(args[3]);
+        }
+    if (args.length < 3 || Integer.parseInt(args[0]) < 1 || Integer.parseInt(args[1]) < 1) {
+      System.out.println("Directions: Put in a positive rows and cols value, then put in a file name. A seed interger and an answer boolean is optional");
+    }
+    else {
+    try {
+      String fileName = args[2];
+      int cols = Integer.parseInt(args[1]);
+      int rows = Integer.parseInt(args[0]);
+      WordSearch output = new WordSearch(rows,cols,fileName,theseed,key);
+      System.out.println(output);
+    }
+    catch (IllegalArgumentException b) {System.out.println("Directions: Put in a positive rows and cols value, then put in a file name. A seed interger and an answer boolean is optional");}
+    }
+  }
 }
