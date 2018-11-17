@@ -155,10 +155,10 @@ public class WordSearch{
     wordsToAdd = new ArrayList();
     wordsAdded = new ArrayList();
     seed = (int) System.currentTimeMillis();
-    Random randgen = new Random();
+    randgen = new Random();
     randgen.setSeed(seed);
     readfile(fileName);
-    //addAllWords();
+    addAllWords();
 
   }
 
@@ -170,9 +170,9 @@ public class WordSearch{
     wordsToAdd = new ArrayList();
     wordsAdded = new ArrayList();
     seed = randSeed;
-    Random randgen = new Random();
-    randgen.setSeed(seed);
+    randgen = new Random(seed);
     readfile(fileName);
+    addAllWords();
   }
 
 
@@ -252,14 +252,15 @@ public class WordSearch{
 
 
   public void addAllWords() {
+    int index; int rowIncrement; int colIncrement; int row; int col; String word;
      if (data.length > 0) {
     for (int i = 0; wordsToAdd.size() > 0 && i < 1000; i += 1) {
-      int index = randgen.nextInt() % wordsToAdd.size();
-      int rowIncrement = randgen.nextInt() % 3 - 1;
-      int colIncrement = randgen.nextInt() % 3 - 1;
-      int row = randgen.nextInt() % data.length;
-      int col = randgen.nextInt() % data[0].length;
-      String word = wordsToAdd.get(index);
+      index = randgen.nextInt() % wordsToAdd.size();
+      rowIncrement = randgen.nextInt() % 3 - 1;
+      colIncrement = randgen.nextInt() % 3 - 1;
+      row = randgen.nextInt() % data.length;
+      col = randgen.nextInt() % data[0].length;
+      word = wordsToAdd.get(0);
       for (int j = 0; j < 200; j += 1)
       if (addWord(word, row, col,rowIncrement,colIncrement)) {
         j = 200;
