@@ -274,12 +274,12 @@ public class WordSearch{
     int index; int rowIncrement; int colIncrement; int row; int col; String word;
      if (data.length > 0) {
     for (int i = 0; wordsToAdd.size() > 0 && i < 1000; i += 1) {
-      index = randgen.nextInt() % wordsToAdd.size();
+      index = randgen.nextInt(wordsToAdd.size());
       rowIncrement = randgen.nextInt() % 2 ;
       colIncrement = randgen.nextInt() % 2 ;
       row = randgen.nextInt(data.length);
       col = randgen.nextInt(data[0].length);
-      word = wordsToAdd.get(0);
+      word = wordsToAdd.get(index);
       for (int j = 0; j < 400; j += 1)
       if (addWord(word, row, col,rowIncrement,colIncrement)) {
         j = 400;
@@ -310,7 +310,7 @@ public class WordSearch{
        key = Boolean.valueOf(args[4]);
        }
     if (args.length < 4) {
-        theseed = (int) Math.random() * 10000;}
+        theseed = (int) (Math.random() * 10000.0);}
         else {
         theseed = Integer.parseInt(args[3]);
         }
