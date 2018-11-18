@@ -244,7 +244,7 @@ public class WordSearch{
        for (int i = 0; i < word.length(); i += 1) {
          int j = row + rowIncrement * i;
          int k = col + colIncrement * i;
-         if (data[j][k] != word.charAt(i) &&
+         if (data[j][k] != (word.toUpperCase()).charAt(i) &&
              data[j][k] != '_') {
                return false;
              }
@@ -252,7 +252,7 @@ public class WordSearch{
   for (int b = 0; b < word.length(); b += 1) {
     int l = row + rowIncrement * b;
     int m = col + colIncrement * b;
-    data[l][m] = word.charAt(b);
+    data[l][m] = (word.toUpperCase()).charAt(b);
   }
   wordsToAdd.remove(word);
   wordsAdded.add(word);
@@ -292,7 +292,7 @@ public class WordSearch{
     for (int i = 0; i < data.length; i += 1) {
       for (int j = 0; j < data[i].length; j += 1) {
         if (data[i][j] == '_') {
-          data[i][j] = (char) (randgen.nextInt(26) + 'a');
+          data[i][j] = (char) (randgen.nextInt(26) + 'A');
         }
       }
     }
@@ -300,14 +300,14 @@ public class WordSearch{
 
 
   public static void main(String[] args) {
-    boolean key;
+    boolean key = false;
     int theseed;
-      String Directions = "Directions: Put in a positive rows and cols value, then put in a file name. A seed interger and an answer boolean is optional. Keep the seed from 0 to 10000 inclusive";
+      String Directions = "Directions: Put in a positive rows and cols value, then put in a file name. A seed interger and an answer boolean is optional. Keep the seed from 0 to 10000 inclusive. Input true to show key";
       try {
     if (args.length < 5) {
        key = false;}
        else {
-       key = Boolean.valueOf(args[4]);
+       if ("key".equals(args[4])) {key = true;}
        }
     if (args.length < 4) {
         theseed = (int) (Math.random() * 10000.0);}
@@ -323,7 +323,8 @@ public class WordSearch{
       int rows = Integer.parseInt(args[0]);
       WordSearch output = new WordSearch(rows,cols,fileName,theseed,key);
       System.out.println(output);
-    }}
+    }
+  }
     catch (IllegalArgumentException b) {System.out.println(Directions);}
 
     }
