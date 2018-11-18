@@ -133,6 +133,8 @@ public class WordSearch{
     //all words that were successfully added get moved into wordsAdded.
     private ArrayList<String>wordsAdded;
 
+    String Directions = "Directions: Put in a positive rows and cols value, then put in a file name. A seed interger and an answer boolean is optional";
+
   public void readfile(String fileName) {
     try {
     File f = new File(fileName);
@@ -144,7 +146,10 @@ public class WordSearch{
     catch (NullPointerException n) {}
   }
 }
-    catch (FileNotFoundException e) {}
+    catch (FileNotFoundException e) {
+      System.out.println(Directions);
+      System.exit(0);
+    }
   }
 
   // Part 1 - Two Constructors
@@ -186,7 +191,7 @@ public class WordSearch{
     randgen.setSeed(seed);
     readfile(fileName);
     addAllWords();
-    //if (!ans) {fillItIn();}
+    if (!ans) {fillItIn();}
   }
 
 
@@ -231,29 +236,29 @@ public class WordSearch{
   public boolean addWord(String word,int row, int col, int rowIncrement, int colIncrement){
    if (word.length()*rowIncrement + row > data.length ||
        word.length()*rowIncrement + row < -1 ||
-       word.length()*colIncrement + col > data[row].length ||
-       word.length()*colIncrement + col < -1 ||
-       (rowIncrement == 0 &&
-       colIncrement == 0)
+       word.length()*colIncrement + col > data[0].length ||
+       word.length()*colIncrement + col < -1
        )
        {return false;}
-  for (int i = 0; i < word.length(); i += 1) {
-    int j = row + rowIncrement * i;
-    int k = col + colIncrement * i;
-    if (data[j][k] != word.charAt(i) &&
-        data[j][k] != '_') {
-          return false;
-        }
-  }
+  if ( rowIncrement == 0 && colIncrement == 0) {return false;}
+       for (int i = 0; i < word.length(); i += 1) {
+         int j = row + rowIncrement * i;
+         int k = col + colIncrement * i;
+         if (data[j][k] != word.charAt(i) &&
+             data[j][k] != '_') {
+               return false;
+             }
+           }
   for (int b = 0; b < word.length(); b += 1) {
-    int j = row + rowIncrement * b;
-    int k = col + colIncrement * b;
-    data[j][k] = word.charAt(b);
+    int l = row + rowIncrement * b;
+    int m = col + colIncrement * b;
+    data[l][m] = word.charAt(b);
   }
   wordsToAdd.remove(word);
   wordsAdded.add(word);
   return true;
 }
+
  /*[rowIncrement,colIncrement] examples:
 
   *[-1,1] would add up and the right because (row -1 each time, col + 1 each time)
@@ -270,14 +275,14 @@ public class WordSearch{
      if (data.length > 0) {
     for (int i = 0; wordsToAdd.size() > 0 && i < 1000; i += 1) {
       index = randgen.nextInt() % wordsToAdd.size();
-      rowIncrement = randgen.nextInt() % 3 - 1;
-      colIncrement = randgen.nextInt() % 3 - 1;
-      row = randgen.nextInt() % data.length;
-      col = randgen.nextInt() % data[0].length;
+      rowIncrement = randgen.nextInt() % 2 ;
+      colIncrement = randgen.nextInt() % 2 ;
+      row = randgen.nextInt(data.length);
+      col = randgen.nextInt(data[0].length);
       word = wordsToAdd.get(0);
-      for (int j = 0; j < 200; j += 1)
+      for (int j = 0; j < 400; j += 1)
       if (addWord(word, row, col,rowIncrement,colIncrement)) {
-        j = 200;
+        j = 400;
       }
     }
   }
@@ -297,6 +302,8 @@ public class WordSearch{
   public static void main(String[] args) {
     boolean key;
     int theseed;
+      String Directions = "Directions: Put in a positive rows and cols value, then put in a file name. A seed interger and an answer boolean is optional";
+      try {
     if (args.length < 5) {
        key = false;}
        else {
@@ -311,14 +318,13 @@ public class WordSearch{
       System.out.println("Directions: Put in a positive rows and cols value, then put in a file name. A seed interger and an answer boolean is optional");
     }
     else {
-    try {
       String fileName = args[2];
       int cols = Integer.parseInt(args[1]);
       int rows = Integer.parseInt(args[0]);
       WordSearch output = new WordSearch(rows,cols,fileName,theseed,key);
       System.out.println(output);
-    }
+    }}
     catch (IllegalArgumentException b) {System.out.println("Directions: Put in a positive rows and cols value, then put in a file name. A seed interger and an answer boolean is optional");}
+
     }
   }
-}
