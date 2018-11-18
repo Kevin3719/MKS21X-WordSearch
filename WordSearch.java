@@ -302,7 +302,7 @@ public class WordSearch{
   public static void main(String[] args) {
     boolean key;
     int theseed;
-      String Directions = "Directions: Put in a positive rows and cols value, then put in a file name. A seed interger and an answer boolean is optional";
+      String Directions = "Directions: Put in a positive rows and cols value, then put in a file name. A seed interger and an answer boolean is optional. Keep the seed from 0 to 10000 inclusive";
       try {
     if (args.length < 5) {
        key = false;}
@@ -310,12 +310,12 @@ public class WordSearch{
        key = Boolean.valueOf(args[4]);
        }
     if (args.length < 4) {
-        theseed = 24601;}
+        theseed = (int) Math.random() * 10000;}
         else {
         theseed = Integer.parseInt(args[3]);
         }
-    if (args.length < 3 || Integer.parseInt(args[0]) < 1 || Integer.parseInt(args[1]) < 1) {
-      System.out.println("Directions: Put in a positive rows and cols value, then put in a file name. A seed interger and an answer boolean is optional");
+    if (args.length < 3 || Integer.parseInt(args[0]) < 1 || Integer.parseInt(args[1]) < 1 || theseed > 10000 || theseed < 0) {
+      System.out.println(Directions);
     }
     else {
       String fileName = args[2];
@@ -324,7 +324,7 @@ public class WordSearch{
       WordSearch output = new WordSearch(rows,cols,fileName,theseed,key);
       System.out.println(output);
     }}
-    catch (IllegalArgumentException b) {System.out.println("Directions: Put in a positive rows and cols value, then put in a file name. A seed interger and an answer boolean is optional");}
+    catch (IllegalArgumentException b) {System.out.println(Directions);}
 
     }
   }
